@@ -43,24 +43,25 @@ ACCENT = "#22d3ee"
 #    ("bul", text)          -> green dot + light bullet
 #    ("gap",)               -> a little vertical space
 # ===========================================================================
-HOST = "you"   # shown as  you@github  in the header
+HOST = "AUSTIN0022"   # shown as  AUSTIN0022@github  in the header
 
 ROWS = [
     ("host",),
-    ("kv", "Now", "Your current role @ Company"),
-    ("kv", "Prev", "Previous role @ Company"),
-    ("kv", "Also", "Another hat you wear"),
-    ("kv", "Edu", "Your degree, School 'YY"),
+    ("kv", "Now", "Full Stack Developer"),
+    ("kv", "Exp", "1.5 YOE"),
     ("gap",),
     ("sec", "Stack"),
-    ("kv", "Frontend", "React, Next.js, TypeScript"),
-    ("kv", "Backend", "Node, Postgres, GraphQL"),
-    ("kv", "AI / ML", "LangChain, OpenAI, ..."),
-    ("kv", "Cloud", "AWS, Docker, Vercel"),
+    ("kv", "Languages", "TypeScript, JavaScript"),
+    ("kv", "Backend", "Node.js, Prisma, REST APIs"),
+    ("kv", "Database", "PostgreSQL, Redis"),
+    ("kv", "Infra", "BullMQ, AWS, Docker"),
+    ("kv", "Web", "Next.js, Event-driven"),
+    ("kv", "Design", "System Design"),
     ("gap",),
-    ("sec", "Highlights"),
-    ("bul", "A thing you're proud of"),
-    ("bul", "Another highlight worth bragging about"),
+    ("sec", "Focus"),
+    ("bul", "Queues, locks, & distributed infrastructure"),
+    ("bul", "Building production systems that don't break"),
+    ("bul", "Designing systems that scale"),
 ]
 
 

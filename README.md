@@ -14,15 +14,12 @@
 
 ## AUSTIN0022
 
-**Backend Engineer · Building Systems That Scale**
+**Full-Stack Engineer · Building Systems That Scale**
 
 Queues, locks, and distributed infrastructure — production systems that don't break.
 
-<!-- 
-Optional Social Badges:
-[![Portfolio](https://img.shields.io/badge/Portfolio-yoursite.com-0d1117?style=for-the-badge&logo=vercel&logoColor=white)](https://austinmakasare.site)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-YOURHANDLE-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/austin-makasare/)
--->
+[![Portfolio](https://img.shields.io/badge/Portfolio-austinmakasare.site-0d1117?style=for-the-badge&logo=vercel&logoColor=white)](https://austinmakasare.site)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-austin--makasare-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/austin-makasare/)
 
 <br>
 

@@ -1,51 +1,109 @@
 <!--
   This is your PROFILE README. It goes in a repo named exactly after your
   username (e.g. github.com/AUSTIN0022/AUSTIN0022) so GitHub shows it on your profile.
-  Widths 280/490 keep the portrait and info card the same height -- if you change the info card's H or avatar-portrait's PHOTO_ASPECT, re-match these.
+  Structure: Hero -> Terminal Identity -> Engineering Philosophy -> Working Style
+  -> Tech Stack -> Now -> Contribution Graph -> Explore.
+  Regenerate avatar-portrait.svg / info-card.svg via the scripts in scripts/ --
+  don't hand-edit those SVGs.
 -->
 <div align="center">
 
 <table>
 <tr>
 <td valign="top"><img src="./avatar-portrait.svg" width="280" alt="Portrait" /></td>
-<td valign="top"><img src="./info-card.svg" width="490" alt="Experience, stack, highlights" /></td>
+<td valign="top"><img src="./info-card.svg" width="490" alt="Backend-focused Full Stack Engineer — current focus, stack, interests" /></td>
 </tr>
 </table>
 
 ## AUSTIN0022
 
-**Full-Stack Engineer · Building Systems That Scale**
+**Backend-focused Full-Stack Engineer**
 
-Queues, locks, and distributed infrastructure — production systems that don't break.
+Specializing in distributed systems, cloud infrastructure, and scalable SaaS applications.
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-austinmakasare.site-0d1117?style=for-the-badge&logo=vercel&logoColor=white)](https://austinmakasare.site)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-austin--makasare-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/austin-makasare/)
-
-<br>
-
-<img src="https://skillicons.dev/icons?i=ts,js,nodejs,express,prisma,postgres,redis,docker,aws,nextjs,react" alt="Tech stack" />
+</div>
 
 <br>
+
+## Engineering Philosophy
+
+- Reliability over cleverness
+- Automate repetitive work
+- Infrastructure should be reproducible
+- Design for failure
+- Measure before optimizing
+- Keep systems observable
+
+## Working Style
+
+- I enjoy owning features end-to-end.
+- I prefer simple, maintainable designs over unnecessary complexity.
+- I value automation, observability, and reliable deployments.
+- I like documenting architectural decisions.
+- I'm comfortable working across backend, cloud infrastructure, and deployment pipelines.
+
+## Tech Stack
+
+**Languages**
+<br>
+<img src="https://skillicons.dev/icons?i=ts,js" alt="TypeScript, JavaScript" />
+
+**Backend**
+<br>
+<img src="https://skillicons.dev/icons?i=nodejs,express,prisma" alt="Node.js, Express, Prisma" />
+
+**Infrastructure**
+<br>
+<img src="https://skillicons.dev/icons?i=aws,terraform,docker,githubactions" alt="AWS, Terraform, Docker, GitHub Actions" />
+
+**Data**
+<br>
+<img src="https://skillicons.dev/icons?i=postgres,redis" alt="PostgreSQL, Redis" />
+<br>
+<sub>+ REST APIs · BullMQ (queues)</sub>
+
+## Now
+
+<table>
+<tr>
+<td valign="top" width="50%">
+
+**Currently Building**
+
+- Production SaaS platforms
+- Internal operations systems
+- Cloud infrastructure
+- Payment workflows
+- Developer tooling
+
+</td>
+<td valign="top" width="50%">
+
+**Currently Exploring**
+
+- Distributed transactions
+- Kafka
+- OpenTelemetry
+- Kubernetes
+- PostgreSQL internals
+
+</td>
+</tr>
+</table>
+
+<div align="center">
 
 <!-- animated contribution graph, refreshed daily by the workflow -->
 <img src="./contrib-heatmap.svg" width="860" alt="GitHub contribution graph" />
 
 <br><br>
 
-## 🎯 Featured Project
+## Explore
 
-### QuizBuzz — Multi-tenant Real-time Quiz SaaS
-
-Real-time quiz platform with live participation, leaderboards, and automated
-certificate generation — built for a client and presented as my M.Sc. viva
-project.
-
-**Stack:** Socket.IO · Redis Pub/Sub · BullMQ · Prisma · PostgreSQL
-
-**Infra:** Terraform-managed AWS deployment — RDS + PgBouncer, ALB with sticky
-sessions, ASG with lifecycle hooks, ElastiCache — load-tested with k6, ~$37/mo
-idle cost
-
-*Built for a client — code is private.*
+→ [Portfolio](https://austinmakasare.site)
+&nbsp;·&nbsp;
+→ [Resume](https://austinmakasare.site/austin-makasare-resume.pdf)
+&nbsp;·&nbsp;
+→ [LinkedIn](https://www.linkedin.com/in/austin-makasare/)
 
 </div>

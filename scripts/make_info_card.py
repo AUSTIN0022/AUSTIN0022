@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "info-card.svg")
 STATIC = bool(os.environ.get("STATIC"))
 
-W, H = 480, 376
+W = 480          # H is derived below from ROWS -- no need to hand-tune it
 PAD = 20
 TITLEBAR_H = 30
 KEY_X = PAD
@@ -38,6 +38,8 @@ ACCENT = "#22d3ee"
 #
 #  row types:
 #    ("host",)              -> "you@github" header + rule
+#    ("cmd", text)          -> muted "$ text" command line (the "whoami" prompt)
+#    ("identity", text)     -> bold, larger identity line (the answer to whoami)
 #    ("kv", key, value)     -> orange key + light value
 #    ("sec", title)         -> blue "— title —" section rule
 #    ("bul", text)          -> green dot + light bullet
@@ -47,21 +49,29 @@ HOST = "AUSTIN0022"   # shown as  AUSTIN0022@github  in the header
 
 ROWS = [
     ("host",),
-    ("kv", "Now", "Full Stack Developer"),
-    ("kv", "Exp", "1.5 YOE"),
+    ("cmd", "whoami"),
+    ("identity", "Backend-focused Full Stack Engineer"),
     ("gap",),
-    ("sec", "Stack"),
-    ("kv", "Languages", "TypeScript, JavaScript"),
-    ("kv", "Backend", "Node.js, Prisma, REST APIs"),
-    ("kv", "Database", "PostgreSQL, Redis"),
-    ("kv", "Infra", "BullMQ, AWS, Docker"),
-    ("kv", "Web", "Next.js, Event-driven"),
-    ("kv", "Design", "System Design"),
+    ("sec", "Current Focus"),
+    ("bul", "Distributed Systems"),
+    ("bul", "Cloud Infrastructure"),
+    ("bul", "Real-time Applications"),
+    ("bul", "Developer Experience"),
     ("gap",),
-    ("sec", "Focus"),
-    ("bul", "Queues, locks, & distributed infrastructure"),
-    ("bul", "Building production systems that don't break"),
-    ("bul", "Designing systems that scale"),
+    ("sec", "Building With"),
+    ("bul", "TypeScript"),
+    ("bul", "Node.js"),
+    ("bul", "PostgreSQL"),
+    ("bul", "Redis"),
+    ("bul", "AWS"),
+    ("bul", "Terraform"),
+    ("bul", "Docker"),
+    ("gap",),
+    ("sec", "Interested In"),
+    ("bul", "Observability"),
+    ("bul", "Event-driven Systems"),
+    ("bul", "System Design"),
+    ("bul", "Performance Engineering"),
 ]
 
 
@@ -80,6 +90,53 @@ def rise(inner, i):
             f'begin="{delay:.2f}s" dur="0.4s" fill="freeze" calcMode="spline" keySplines="0.2 0.8 0.2 1"/></g>')
 
 
+def row_inner(row, y):
+    kind = row[0]
+    if kind == "host":
+        host = esc(HOST)
+        rule_x = KEY_X + (len(HOST) + 7) * 8 + 8
+        return (f'<text x="{KEY_X}" y="{y:.1f}" font-size="14" font-weight="700">'
+                f'<tspan fill="{GREEN}">{host}</tspan><tspan fill="{MUTED}">@</tspan>'
+                f'<tspan fill="{ACCENT}">github</tspan></text>'
+                f'<line x1="{rule_x}" y1="{y-4:.1f}" x2="{W-PAD}" y2="{y-4:.1f}" '
+                f'stroke="{FRAME}" stroke-opacity="0.8"/>')
+    if kind == "cmd":
+        txt = esc(row[1])
+        return (f'<text x="{KEY_X}" y="{y:.1f}" font-size="12.5">'
+                f'<tspan fill="{MUTED}">$ </tspan><tspan fill="{INK}">{txt}</tspan></text>')
+    if kind == "identity":
+        txt = esc(row[1])
+        return f'<text x="{KEY_X}" y="{y:.1f}" fill="{INK}" font-size="15" font-weight="700">{txt}</text>'
+    if kind == "sec":
+        title = esc(row[1])
+        return (f'<text x="{KEY_X}" y="{y:.1f}" fill="{SECTION}" font-size="12.5" font-weight="700">'
+                f'&#8212; {title}</text>'
+                f'<line x1="{KEY_X + 20 + len(row[1])*8}" y1="{y-4:.1f}" x2="{W-PAD}" y2="{y-4:.1f}" '
+                f'stroke="{FRAME}" stroke-opacity="0.8"/>')
+    if kind == "kv":
+        key, val = esc(row[1]), esc(row[2])
+        return (f'<text x="{KEY_X}" y="{y:.1f}" fill="{KEY}" font-size="12.5" font-weight="700">{key}</text>'
+                f'<text x="{VAL_X}" y="{y:.1f}" fill="{INK}" font-size="12.5">{val}</text>')
+    if kind == "bul":
+        txt = esc(row[1])
+        return (f'<circle cx="{KEY_X+3}" cy="{y-4:.1f}" r="2.5" fill="{GREEN}"/>'
+                f'<text x="{KEY_X+14}" y="{y:.1f}" fill="{INK}" font-size="12.5">{txt}</text>')
+    return None
+
+
+# ---- pass 1: lay out rows top -> bottom to find where content ends, so the
+# card's height always matches ROWS above without hand-tuning a constant -----
+y = TITLEBAR_H + 30
+row_ys = []
+for row in ROWS:
+    if row[0] == "gap":
+        y += LINE_H * 0.5
+        continue
+    row_ys.append(y)
+    y += LINE_H
+H = round(y + PAD * 0.6)
+
+# ---- pass 2: build the SVG now that H is known -----------------------------
 parts = [
     f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">',
@@ -93,43 +150,18 @@ parts = [
 for i, dotcol in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]):
     parts.append(f'<circle cx="{PAD + i*16}" cy="{TITLEBAR_H/2}" r="5" fill="{dotcol}"/>')
 parts.append(f'<text x="{W/2}" y="{TITLEBAR_H/2 + 4}" fill="{MUTED}" font-size="12" '
-             f'text-anchor="middle">{esc(HOST)}@github: ~$ neofetch</text>')
+             f'text-anchor="middle">{esc(HOST)}@github: ~$ whoami</text>')
 
-y = TITLEBAR_H + 30
-for i, row in enumerate(ROWS):
-    kind = row[0]
-    if kind == "gap":
-        y += LINE_H * 0.5
+ri = 0
+for row in ROWS:
+    if row[0] == "gap":
         continue
-    if kind == "host":
-        host = esc(HOST)
-        rule_x = KEY_X + (len(HOST) + 7) * 8 + 8
-        inner = (f'<text x="{KEY_X}" y="{y:.1f}" font-size="14" font-weight="700">'
-                 f'<tspan fill="{GREEN}">{host}</tspan><tspan fill="{MUTED}">@</tspan>'
-                 f'<tspan fill="{ACCENT}">github</tspan></text>'
-                 f'<line x1="{rule_x}" y1="{y-4:.1f}" x2="{W-PAD}" y2="{y-4:.1f}" '
-                 f'stroke="{FRAME}" stroke-opacity="0.8"/>')
-    elif kind == "sec":
-        title = esc(row[1])
-        inner = (f'<text x="{KEY_X}" y="{y:.1f}" fill="{SECTION}" font-size="12.5" font-weight="700">'
-                 f'&#8212; {title}</text>'
-                 f'<line x1="{KEY_X + 12 + len(row[1])*8}" y1="{y-4:.1f}" x2="{W-PAD}" y2="{y-4:.1f}" '
-                 f'stroke="{FRAME}" stroke-opacity="0.8"/>')
-    elif kind == "kv":
-        key, val = esc(row[1]), esc(row[2])
-        inner = (f'<text x="{KEY_X}" y="{y:.1f}" fill="{KEY}" font-size="12.5" font-weight="700">{key}</text>'
-                 f'<text x="{VAL_X}" y="{y:.1f}" fill="{INK}" font-size="12.5">{val}</text>')
-    elif kind == "bul":
-        txt = esc(row[1])
-        inner = (f'<circle cx="{KEY_X+3}" cy="{y-4:.1f}" r="2.5" fill="{GREEN}"/>'
-                 f'<text x="{KEY_X+14}" y="{y:.1f}" fill="{INK}" font-size="12.5">{txt}</text>')
-    else:
-        continue
-    parts.append(rise(inner, i))
-    y += LINE_H
+    inner = row_inner(row, row_ys[ri])
+    parts.append(rise(inner, ri))
+    ri += 1
 
 parts.append("</svg>")
 svg = "".join(parts)
 with open(OUT, "w") as f:
     f.write(svg)
-print("wrote", OUT, len(svg), "bytes;", W, "x", H, "content_bottom", round(y))
+print("wrote", OUT, len(svg), "bytes;", W, "x", H)

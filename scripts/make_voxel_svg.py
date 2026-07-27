@@ -19,15 +19,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "voxel-avatar-navy-hoodies.png")
 OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(HERE, "..", "avatar-portrait.svg")
 
-# match avi-ascii.svg's canvas exactly so it drops into the README table
-# without changing the layout (portrait / info-card stay the same height).
+# the art area is sized to the SOURCE image's own aspect ratio -- no cropping,
+# so the full shot (top of the hair down to the bottom of the hoodie) shows.
 PAD = 20
 TITLEBAR_H = 30
 STATUS_H = 30
-CANVAS_W = 840
-CANVAS_H = 875
-ART_W = CANVAS_W - PAD * 2
-ART_H = CANVAS_H - TITLEBAR_H - STATUS_H - PAD
+ART_W = 800
+
+im = Image.open(SRC).convert("RGB")
+src_w, src_h = im.size
+ART_H = round(ART_W * src_h / src_w)
+
+CANVAS_W = ART_W + PAD * 2
+CANVAS_H = TITLEBAR_H + ART_H + STATUS_H + PAD
 
 BG = "#0d1117"
 BG2 = "#111722"
@@ -36,31 +40,16 @@ TITLE_TEXT = "#7d8590"
 INK = "#c9d1d9"
 SCAN = "#3fb950"   # scan-line accent (matches the green "online" dot elsewhere)
 
-BANDS = 48
-TOTAL_DUR = 5.3            # roughly matches the ascii portrait's reveal length
-STAGGER = TOTAL_DUR / BANDS
+# taller canvas -> more bands so each band stays a similarly thin slice, and a
+# longer total duration (same ~0.11s-per-band pace as the ascii portrait's rows)
+BANDS = max(1, round(ART_H / 16.5))
+STAGGER = 0.11
+TOTAL_DUR = BANDS * STAGGER
 BAND_DUR = STAGGER * 1.35  # slight overlap so bands blend, no visible seams
 
 STATIC = bool(os.environ.get("STATIC"))  # emit frozen (fully revealed) preview
 
-# ---- 1. crop + resize the source image to fill the art area exactly -------
-im = Image.open(SRC).convert("RGB")
-src_w, src_h = im.size
-target_ratio = ART_W / ART_H
-src_ratio = src_w / src_h
-
-if src_ratio > target_ratio:
-    # source is relatively wider -> crop sides
-    new_w = int(src_h * target_ratio)
-    x0 = (src_w - new_w) // 2
-    im = im.crop((x0, 0, x0 + new_w, src_h))
-else:
-    # source is relatively taller -> crop a bit off the bottom so the face
-    # (near the top third) stays centered rather than the composition sinking
-    new_h = int(src_w / target_ratio)
-    y0 = max(0, int((src_h - new_h) * 0.28))
-    im = im.crop((0, y0, src_w, y0 + new_h))
-
+# ---- 1. resize the full, uncropped source image to fill the art area ------
 im = im.resize((ART_W, ART_H), Image.LANCZOS)
 
 buf = io.BytesIO()
@@ -94,7 +83,7 @@ parts.append(f'<text x="{CANVAS_W/2}" y="{TITLEBAR_H/2 + 4}" fill="{TITLE_TEXT}"
              f'text-anchor="middle">austin@github: ~$ ./portrait.sh --voxel</text>')
 
 img_tag = (f'<image href="{data_uri}" x="{PAD}" y="{art_top:.1f}" width="{ART_W}" '
-           f'height="{ART_H}" preserveAspectRatio="xMidYMid slice"/>')
+           f'height="{ART_H}" preserveAspectRatio="none"/>')
 
 if STATIC:
     parts.append(img_tag)

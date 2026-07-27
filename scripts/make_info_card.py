@@ -50,7 +50,7 @@ HOST = "AUSTIN0022"   # shown as  AUSTIN0022@github  in the header
 ROWS = [
     ("host",),
     ("cmd", "whoami"),
-    ("identity", "Backend-focused Full Stack Engineer"),
+    ("identity", "Full Stack Engineer"),
     ("gap",),
     ("sec", "Current Focus"),
     ("bul", "Distributed Systems"),

@@ -15,11 +15,11 @@
 </tr>
 </table>
 
-## AUSTIN0022
+## AUSTIN MAKASARE
 
-**Backend-focused Full-Stack Engineer**
+**Full-Stack Engineer (Backend-Focused)**
 
-Specializing in distributed systems, cloud infrastructure, and scalable SaaS applications.
+Building production-ready SaaS products from the ground up—from architecture and infrastructure to deployment and scale.
 
 </div>
 

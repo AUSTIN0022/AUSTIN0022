@@ -1,17 +1,17 @@
 {
   "username": "AUSTIN0022",
-  "generated_at": "2026-10-31T05:15:14Z",
+  "generated_at": "2026-11-01T05:43:53Z",
   "range": {
-    "start": "2025-10-26",
-    "end": "2026-10-31"
+    "start": "2025-11-02",
+    "end": "2026-11-01"
   },
-  "total_contributions": 887,
-  "active_days": 197,
+  "total_contributions": 879,
+  "active_days": 194,
   "avg_per_active_day": 4.5,
   "current_streak": {
-    "length": 1,
-    "start": "2026-10-30",
-    "end": "2026-10-30"
+    "length": 0,
+    "start": null,
+    "end": null
   },
   "longest_streak": {
     "length": 24,
@@ -23,10 +23,6 @@
     "count": 43
   },
   "monthly": [
-    {
-      "month": "2025-10",
-      "total": 8
-    },
     {
       "month": "2025-11",
       "total": 22
@@ -74,37 +70,13 @@
     {
       "month": "2026-10",
       "total": 73
+    },
+    {
+      "month": "2026-11",
+      "total": 0
     }
   ],
   "days": [
-    {
-      "date": "2025-10-26",
-      "count": 0
-    },
-    {
-      "date": "2025-10-27",
-      "count": 0
-    },
-    {
-      "date": "2025-10-28",
-      "count": 3
-    },
-    {
-      "date": "2025-10-29",
-      "count": 1
-    },
-    {
-      "date": "2025-10-30",
-      "count": 4
-    },
-    {
-      "date": "2025-10-31",
-      "count": 0
-    },
-    {
-      "date": "2025-11-01",
-      "count": 0
-    },
     {
       "date": "2025-11-02",
       "count": 0
@@ -1559,6 +1531,10 @@
     },
     {
       "date": "2026-10-31",
+      "count": 0
+    },
+    {
+      "date": "2026-11-01",
       "count": 0
     }
   ]
